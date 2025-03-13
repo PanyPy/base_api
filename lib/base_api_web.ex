@@ -17,7 +17,7 @@ defmodule BaseApiWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+def static_paths, do: ~w(favicon.ico robots.txt)
 
   def router do
     quote do
@@ -42,7 +42,7 @@ defmodule BaseApiWeb do
         layouts: [html: BaseApiWeb.Layouts]
 
       import Plug.Conn
-      import BaseApiWeb.Gettext
+      use Gettext, backend: BaseApiWeb.Gettext
 
       unquote(verified_routes())
     end

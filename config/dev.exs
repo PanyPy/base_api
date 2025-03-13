@@ -2,9 +2,9 @@ import Config
 
 # Configure your database
 config :base_api, BaseApi.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
+  username: System.get_env("DB_USERNAME") || "postgres",
+  password: System.get_env("DB_PASSWORD") || "postgres",
+  hostname: System.get_env("DB_HOST") || "localhost",
   database: "base_api_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
@@ -15,7 +15,6 @@ config :base_api, BaseApi.Repo,
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
-# with esbuild to bundle .js and .css sources.
 config :base_api, BaseApiWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
@@ -25,8 +24,6 @@ config :base_api, BaseApiWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "rr96572MAvC6AGjwtNTdgGyCWbPS/NSawVoyr+tkHU4qvnVBq4FDfWHq/lgqbxz2",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
