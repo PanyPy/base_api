@@ -5,8 +5,16 @@ defmodule BaseApiWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", BaseApiWeb do
+  scope "/api" do
     pipe_through :api
+    forward "/graphql", Absinthe.Plug, schema: BaseApi.Schema
+  end
+
+  if Mix.env == :dev do
+    forward "/graphiql",
+      Absinthe.Plug.GraphiQL,
+      schema: BaseApi.Schema,
+      interface: :playground
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
